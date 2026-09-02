@@ -1,0 +1,20 @@
+"""Q1. Input an integer n, input n strings into a list. 
+Create a dictionary where the key is an alphabet and the value is 
+how many times it appears across all the strings. Not case sensitive. 
+Eg for ["Formula", "Manipal"] the output looks like {'f':1, 'o':1, 'a':3 ...} """
+
+
+n = int(input ("Enter a number: "))
+strings = []
+for i in range (1, (n + 1)):
+    strings.append(input("Enter string " + str(i) + ": "))
+count={}
+for string in strings:
+    for char in string:
+        char=char.lower()
+        if char in count:
+            count[char] += 1
+        else:
+            count[char] = 1
+for char, freq in count.items():
+    print(f"{char}: {freq}")

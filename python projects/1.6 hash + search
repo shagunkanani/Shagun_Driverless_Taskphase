@@ -1,0 +1,28 @@
+"""Q6. Improve Q5. Insert each new number so the sublist stays sorted. 
+Do not sort after insertion. 
+Hint, find the insertion index using binary search. """
+
+hash_table = []
+for i in range (10):
+    hash_table.append([])
+
+print("Enter number of integers: ")
+n= int(input())
+for i in range (n):
+    num= int(input("Enter a number: "))
+    rem= num%10
+    low = 0
+    high = len(hash_table[rem]) - 1
+    while(low<=high):
+        mid= (low+high)//2
+        if hash_table[rem][mid]==num:
+            break
+        elif hash_table[rem][mid]<num:
+            low = mid+1
+        else:
+            high = mid - 1
+    hash_table[rem].insert(high + 1, num)
+
+print("Hash table: ")
+for i in range(10):
+    print(f"num % 10 == {i}: {hash_table[i]}")

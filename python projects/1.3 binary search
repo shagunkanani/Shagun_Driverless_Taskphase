@@ -1,0 +1,45 @@
+"""Q3. Create a class with a function that does binary search in a list of strings. 
+Input a list like Q1, sort it using your Q2 function, input a string, search for it. """
+
+class sorting:
+    @staticmethod
+    def selection_sort(sort):
+        for i in range(0,len(sort)):
+                m=i
+                for j in range(i+1,len(sort)):
+                    if sort[j]<sort[m]:
+                        m=j
+                temp = sort[m]
+                sort[m] = sort[i]
+                sort[i] = temp
+        return sort
+
+class binary_search:
+    @staticmethod
+    def search(sorted, w):
+        low = 0
+        high= len(sorted)-1
+        while(low<=high):
+            mid = (low+high)//2
+            if sorted[mid]==w:
+                return mid
+            elif sorted[mid] < w:
+                low = mid + 1
+            else:
+                high = mid - 1
+        return -1
+            
+n = int(input("Enter a number:"))
+list = []
+for i in range(1, (n + 1)):
+    list.append(input("Enter string " + str(i) + ": "))
+print("List before sorting: ", list)
+sorted_list = sorting.selection_sort(list)
+print("List after sorting: ", sorted_list)
+
+word= input("Enter a string to search: ")
+index = int(binary_search.search(sorted_list, word))
+if index != -1:
+    print("Word found at position: ", index+1)
+else:
+    print("Word not found")

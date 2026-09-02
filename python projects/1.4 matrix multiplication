@@ -1,0 +1,49 @@
+"""Q4. Write a function for matrix multiplication.
+ It should support any dimensions and print errors where multiplication is impossible. """
+
+def multi(A, B):
+    result = []
+    for i in range(m):
+        row = []
+        for j in range(q):
+            total = 0
+            for k in range(n):
+                total = total + A[i][k] * B[k][j]
+            row.append(total)
+        result.append(row)
+    return result
+
+dim = input("Enter dimensions of matrix A: ").split()
+m = int(dim[0])
+n = int(dim[1])
+dim = input("Enter dimensions of matrix B: ").split()
+p = int(dim[0])
+q = int(dim[1])
+
+if n!=p:
+    print("Matrix multiplication is not possible")
+else:
+    print("Enter elements of matrix A: ")
+    A = []
+    for i in range (m):
+        row = []
+        for j in range (n):
+            element = int(input(f"Enter element of row {i} and column {j} : "))
+            row.append(element)
+        A.append(row)
+    print("Enter elements of matrix B: ")
+    B = []
+    for i in range (p):
+        row = []
+        for j in range (q):
+            element = int(input(f"Enter element of row {i} and column {j} : "))
+            row.append(element)
+        B.append(row)
+
+    result = multi(A, B)
+    print("Resultant matrix: ")
+    for i in range(m):
+        for j in range(q):
+            print(result[i][j], end = " ")
+        print()
+

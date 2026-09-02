@@ -1,0 +1,86 @@
+"""Q8. Consider a CSV ( cones.csv ) with cone id, x, y, colour (blue or yellow) per row. 
+Sort the rows by distance from the origin. Write two new CSVs, one per colour, keeping the sorted order. 
+Then find the midpoint between every blue cone and its nearest yellow cone and write those midpoints to centreline.csv."""
+
+import csv
+
+cones = []
+
+with open('/Users/KetanKanani/python projects/cones.csv', 'r') as file:
+    reader = csv.reader(file)
+
+    for row in reader:
+        cones.append(row)
+
+for i in range(1, len(cones)):
+    x = float(cones[i][1])
+    y = float(cones[i][2])
+    distance = (x**2 + y**2)**0.5
+    cones[i].append(distance)
+
+for i in range(1, len(cones)):
+    m = i
+    for j in range(i + 1, len(cones)):
+        if cones[j][4] < cones[m][4]:
+            m = j
+    temp = cones[m]
+    cones[m] = cones[i]
+    cones[i] = temp
+
+blue = []
+yellow = []
+centreline = []
+for i in range(1, len(cones)):
+    if cones[i][3] == 'blue':
+        blue.append(cones[i])
+    elif cones[i][3] == 'yellow':
+        yellow.append(cones[i])
+
+with open("blue.csv", "w", newline="") as file:
+    writer = csv.writer(file)
+    writer.writerow(["id", "x", "y", "colour"])
+    for cone in blue:
+        writer.writerow([cone[0], cone[1], cone[2], cone[3]])
+
+with open("yellow.csv", "w", newline="") as file:
+    writer = csv.writer(file)
+    writer.writerow(["id", "x", "y", "colour"])
+    for cone in yellow:
+        writer.writerow([cone[0], cone[1], cone[2], cone[3]])   
+
+with open("centreline.csv", "w", newline="") as file:
+
+    writer = csv.writer(file)
+
+    writer.writerow(["x", "y"])
+
+    for blue_cone in blue:
+
+        blue_x = float(blue_cone[1])
+        blue_y = float(blue_cone[2])
+
+        nearest_yellow = None
+        min_distance = float('inf')
+
+        for yellow_cone in yellow:
+
+            yellow_x = float(yellow_cone[1])
+            yellow_y = float(yellow_cone[2])
+
+            distance = ((blue_x - yellow_x) ** 2 +
+                        (blue_y - yellow_y) ** 2) ** 0.5
+
+            if distance < min_distance:
+                min_distance = distance
+                nearest_yellow = yellow_cone
+
+        midpoint_x = (blue_x + float(nearest_yellow[1])) / 2
+        midpoint_y = (blue_y + float(nearest_yellow[2])) / 2
+
+        centreline.append([midpoint_x, midpoint_y])
+
+    for point in centreline:
+        writer.writerow([point[0], point[1]])
+
+
+print("Centreline:", centreline)

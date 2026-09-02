@@ -1,0 +1,19 @@
+"""Q5. Learn open hashing. Implement a hash table using 2D lists. Input n integers. 
+Every number where num % 10 == 0 goes in sublist 0, == 1 goes in sublist 1, and so on. 
+Print the hash table. num % 10 """
+
+hash_table = {}
+for i in range (10):
+    hash_table[i] = []
+
+print("Enter number of integers: ")
+n= int(input())
+for i in range (n):
+    num= int(input("Enter a number: "))
+    rem= num%10
+    if rem in hash_table:
+        hash_table[rem].append(num)
+
+print("Hash table: ")
+for i in range(10):
+    print(f"num % 10 == {i}: {hash_table[i]}")
